@@ -1,0 +1,1026 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="JMS简介像RMI,Hessian/Burlap这样的远程调用机制是同步的.而JMS提供了应用之间的异步通信机制.当异步发送消息时,客户端不需要等待服务处理消息,甚至不需要等待消息被投递.客户端发送消息然后继续执行,这是因为客户端假定服务最终可以收到并处理这个消息. 在JMS中有2个主要概念:消息代理(message broker)和目的地(destination).消息代理可以确保消息被投递到指">
+<meta name="keywords" content="spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 消息JMS">
+<meta property="og:url" content="http://yoursite.com/2017/10/29/Spring消息JMS/index.html">
+<meta property="og:site_name" content="Mjing&#39;s Blog">
+<meta property="og:description" content="JMS简介像RMI,Hessian/Burlap这样的远程调用机制是同步的.而JMS提供了应用之间的异步通信机制.当异步发送消息时,客户端不需要等待服务处理消息,甚至不需要等待消息被投递.客户端发送消息然后继续执行,这是因为客户端假定服务最终可以收到并处理这个消息. 在JMS中有2个主要概念:消息代理(message broker)和目的地(destination).消息代理可以确保消息被投递到指">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://photo.weibo.com/2550251247/photos/detail/photo_id/4024293129365462/album_id/3654048493480491">
+<meta property="og:image" content="http://photo.weibo.com/2550251247/photos/detail/photo_id/4024293129365484/album_id/3654048493480491">
+<meta property="og:updated_time" content="2016-09-27T04:41:56.281Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 消息JMS">
+<meta name="twitter:description" content="JMS简介像RMI,Hessian/Burlap这样的远程调用机制是同步的.而JMS提供了应用之间的异步通信机制.当异步发送消息时,客户端不需要等待服务处理消息,甚至不需要等待消息被投递.客户端发送消息然后继续执行,这是因为客户端假定服务最终可以收到并处理这个消息. 在JMS中有2个主要概念:消息代理(message broker)和目的地(destination).消息代理可以确保消息被投递到指">
+<meta name="twitter:image" content="http://photo.weibo.com/2550251247/photos/detail/photo_id/4024293129365462/album_id/3654048493480491">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/29/Spring消息JMS/"/>
+
+  <title> Spring 消息JMS | Mjing's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8bc0202c2f4b38c6b6d3abb169f0a7b6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Mjing's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Mjing</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring 消息JMS
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-10-29T16:17:52+08:00" content="2017-10-29">
+              2017-10-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/10/29/Spring消息JMS/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/29/Spring消息JMS/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/10/29/Spring消息JMS/" class="leancloud_visitors" data-flag-title="Spring 消息JMS">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="JMS简介"><a href="#JMS简介" class="headerlink" title="JMS简介"></a>JMS简介</h3><p>像RMI,Hessian/Burlap这样的远程调用机制是同步的.而JMS提供了应用之间的异步通信机制.当异步发送消息时,客户端不需要等待服务处理消息,甚至不需要等待消息被投递.客户端发送消息然后继续执行,这是因为客户端假定服务最终可以收到并处理这个消息.</p>
+<p>在JMS中有2个主要概念:<strong>消息代理(message broker)</strong>和<strong>目的地(destination)</strong>.<br>消息代理可以确保消息被投递到指定的目的地,同时释放发送者,使其能够继续进行其它的业务.<br>在JMS中每条消息都带有一个消息目的地,目的地就好像一个邮箱,可以将消息放入这个邮箱,直到有人将他们取走.<br>但是消息不想信件地址那么具体.目的地只关注消息应该从哪里获得,而不关心是由谁取走消息的.<br>在JMS中,有2种类型的目的地:<strong>队列</strong>和<strong>主题</strong>.每种类型都与特定的消息模型相关联,分别是应用于队列的点对点模型和应用于主题的发布/订阅模型.<br><a id="more"></a></p>
+<ul>
+<li><p>点对点消息模型<br>在点对点模型中,每一个消息都有一个发送者和一个接收者.<br>如图12.3所示,当消息代理得到消息时,它将消息放入一个队列中.当接收者请求队列中的下一条消息时,消息会从队列中取出,投递给接收者.因为消息投递后会从队列中删除,这样就可以保证消息只投递给一个接收者.但是可以使用多个接收者从队列中接收消息.只不过,每个接收者只处理自己接收的消息.<br><img src="http://photo.weibo.com/2550251247/photos/detail/photo_id/4024293129365462/album_id/3654048493480491" alt="Alt text"></p>
+</li>
+<li><p>发布订阅消息模型<br>在发布订阅消息模型中,消息会发送给一个主题,与队列类似,多个接收者都可以监听一个主题.但是,与队列不同的是,消息不再是只投递给一个接收者,所有的主题订阅者都会接收到此消息,如图12.4所示.<br><img src="http://photo.weibo.com/2550251247/photos/detail/photo_id/4024293129365484/album_id/3654048493480491" alt="Alt text"><br>对于jms,发布者并不知道是谁订阅了它的消息,发布者仅仅知道它的消息发送到一个特定的主题,而不知道有谁在监听这个主题,也就是说,发布者不知道消息是如何被处理的.</p>
+<h3 id="在Spring中搭建消息代理"><a href="#在Spring中搭建消息代理" class="headerlink" title="在Spring中搭建消息代理"></a>在Spring中搭建消息代理</h3><h4 id="创建连接工厂"><a href="#创建连接工厂" class="headerlink" title="创建连接工厂"></a>创建连接工厂</h4><p>我们需要使用Spring连接工厂通过消息代理发送消息.这里我们选择ActiveMQ作为我们的消息代理.<br>在Spring中可以使用如下的方式配置:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=&quot;connectionFactory&quot; </div><div class="line">	      class=&quot;org.apache.activemq.spring.ActiveMQConnectionFactory&quot;&gt;</div><div class="line">	      &lt;property name=&quot;brokerURL&quot; value=&quot;tcp://localhost:61616&quot;/&gt;</div><div class="line">	   &lt;/bean&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>也可以使用activeMQ自己的Spring配置命名空间来声明连接工厂,首先需要确保在Spring的配置xml文件中声明了amq命名空间.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">      xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">      xmlns:jms=&quot;http://www.springframework.org/schema/jms&quot;</div><div class="line">      xmlns:amq=&quot;http://activemq.apache.org/schema/core&quot;</div><div class="line">      xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans </div><div class="line">      http://www.springframework.org/schema/beans/spring-beans-2.5.xsd </div><div class="line">      http://www.springframework.org/schema/jms</div><div class="line">      http://www.springframework.org/schema/jms/spring-jms-3.2.9.xsd</div><div class="line">      http://activemq.apache.org/schema/core</div><div class="line">	  http://activemq.apache.org/schema/core/activemq-core-5.4.2.xsd&quot;</div><div class="line">	  default-lazy-init=&quot;true&quot;&gt;</div><div class="line">	  </div><div class="line">	 &lt;!--  &lt;bean id=&quot;connectionFactory&quot; </div><div class="line">	      class=&quot;org.apache.activemq.spring.ActiveMQConnectionFactory&quot;&gt;</div><div class="line">	      &lt;property name=&quot;brokerURL&quot; value=&quot;tcp://localhost:61616&quot;/&gt;</div><div class="line">	   &lt;/bean&gt; --&gt;</div><div class="line">	   </div><div class="line">	   &lt;amq:connectionFactory id=&quot;connectionFactory&quot; </div><div class="line">	   brokerURL=&quot;tcp://localhost:61616&quot; /&gt;</div><div class="line">      &lt;/beans&gt;</div></pre></td></tr></table></figure></p>
+<p>注意<code>&lt;amq:connectionFactory&gt;</code>元素很明显是为ActiveMQ准备的 ,如果我们使用不同的消息代理实现,它们不一定会提供Spring配置命名空间.如果spring没有提供的话,那我们就需要使用<code>&lt;bean&gt;</code>来装配连接工厂.<br>这个配置指明了连接工厂消息代理的位置,是在本地机器的61616端口的ActiveMQ.</p>
+<p>####声明ActiveMQ消息目的地<br>目的地可以是一个队列,也可以是一个主题,这取决于应用的需求.但是,不论使用的是队列还是主题,我们都必须使用特定的消息代理实现类在Spring中配置目的地Bean.如,下面的<code>&lt;bean&gt;</code>声明定义了一个ActiveMQ队列.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 声明ActiveMQ消息目的地-队列 --&gt;</div><div class="line">   &lt;bean id=&quot;queue&quot; class=&quot;org.apache.activemq.command.ActiveMQQueue&quot;&gt;</div><div class="line">  	 &lt;constructor-arg value=&quot;spitter.queue&quot;/&gt;</div><div class="line">   &lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>或者根据需求,定义为主题:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 声明ActiveMQ消息目的地-主题 --&gt;</div><div class="line">   &lt;bean id=&quot;topic&quot; class=&quot;org.apache.activemq.command.ActiveMQTopic&quot;&gt;</div><div class="line">  	 &lt;constructor-arg value=&quot;spitter.topic&quot;/&gt;</div><div class="line">   &lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>或者换成下面的ActiveMQ命名空间定义的方式:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;amq:queue id=&quot;queue&quot; physicalName=&quot;spitter.queue&quot; /&gt;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;amq:topic id=&quot;topic&quot; physicalName=&quot;spitter.topic&quot; /&gt;</div></pre></td></tr></table></figure>
+<p>声明好了基本组件,我们现在已经准备好发送和接收消息了.为此没我们准备使用Spring的JmsTemplate–spring对Jms支持的核心组件.</p>
+<p>###使用Spring的JMS模板</p>
+<p>####处理失控的JMS代码<br>使用传统的Jms发送消息(不使用Spring).<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">	 * 发送消息</div><div class="line">	 */</div><div class="line">	public void sendMessage()&#123;</div><div class="line">		ConnectionFactory cf = new ActiveMQConnectionFactory(&quot;tcp://localhost:61616&quot;) ;</div><div class="line">		Connection conn = null ;</div><div class="line">		Session see = null ;</div><div class="line">		try &#123;</div><div class="line">			conn = cf.createConnection() ;</div><div class="line">			see = conn.createSession(false, Session.AUTO_ACKNOWLEDGE) ;</div><div class="line">			Destination dec = new ActiveMQQueue(&quot;spitter.queue&quot;) ;</div><div class="line">			MessageProducer producer = see.createProducer(dec) ;</div><div class="line">			TextMessage message = see.createTextMessage() ;</div><div class="line">			message.setText(&quot;Hello World!&quot;);</div><div class="line">			producer.send(message);</div><div class="line">		&#125; catch (JMSException e) &#123;</div><div class="line">			// TODO Auto-generated catch block</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;finally&#123;</div><div class="line">			try &#123;</div><div class="line">			if(see!=null)&#123;</div><div class="line">				see.close();</div><div class="line">				&#125;</div><div class="line">			if(conn !=null)&#123;</div><div class="line">				conn.close();</div><div class="line">				&#125;</div><div class="line">			&#125; catch (JMSException e) &#123;</div><div class="line">			// TODO Auto-generated catch block</div><div class="line">			e.printStackTrace();</div><div class="line">		  &#125;</div><div class="line">		&#125;</div><div class="line">			</div><div class="line">		&#125;</div></pre></td></tr></table></figure></p>
+<p>传统的接收消息:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">	 * 接收消息</div><div class="line">	 */</div><div class="line">	</div><div class="line">	public void reciveMessage()&#123;</div><div class="line">		ConnectionFactory cf = new ActiveMQConnectionFactory(&quot;tcp://localhost:61616&quot;) ;</div><div class="line">		Connection conn = null ;</div><div class="line">		Session see = null ;</div><div class="line">		try &#123;</div><div class="line">			conn = cf.createConnection() ;</div><div class="line">			conn.start();</div><div class="line">			see = conn.createSession(false, Session.AUTO_ACKNOWLEDGE) ;</div><div class="line">			Destination dec = new ActiveMQQueue(&quot;spitter.queue&quot;) ;</div><div class="line">			MessageConsumer consumer = see.createConsumer(dec) ;</div><div class="line">		    Message message =consumer.receive() ;</div><div class="line">			TextMessage textMessage = (TextMessage) message ;</div><div class="line">			System.out.println(&quot;receive a message:&quot;+textMessage);</div><div class="line">			conn.stop();</div><div class="line">		&#125; catch (JMSException e) &#123;</div><div class="line">			// TODO Auto-generated catch block</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;finally&#123;</div><div class="line">			try &#123;</div><div class="line">			if(see!=null)&#123;</div><div class="line">				see.close();</div><div class="line">				&#125;</div><div class="line">			if(conn !=null)&#123;</div><div class="line">				conn.close();</div><div class="line">				&#125;</div><div class="line">			&#125; catch (JMSException e) &#123;</div><div class="line">			// TODO Auto-generated catch block</div><div class="line">			e.printStackTrace();</div><div class="line">		  &#125;</div><div class="line">		&#125;</div><div class="line">			</div><div class="line">		</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到代码混乱,有很多样板式代码,难以维护<br>下面使用JmsTemplate处理失控的JMS样板式代码:</p>
+<p>####使用JMS模板</p>
+<ul>
+<li>装配jms模板<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 声明JmsTemplate模板 --&gt;</div><div class="line">&lt;bean id=&quot;jmsTemplate&quot; class=&quot;org.springframework.jms.core.JmsTemplate&quot;&gt;</div><div class="line">	&lt;property name=&quot;connectionFactory&quot; ref=&quot;connectionFactory&quot; /&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>设置connectionFactory,说明如何连接到消息代理</p>
+<ul>
+<li><p>发送消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@(spring)Autowired</div><div class="line">JmsTemplate jmsTemplate;</div><div class="line">jmsTemplate.send(&quot;spittle.alert.queue&quot;,</div><div class="line">	new MessageCreator()&#123;</div><div class="line">		public Message createMessage(Session session) </div><div class="line">		   throws JMSException&#123;</div><div class="line">			   return session.createObjectMessage(spittle) ;</div><div class="line">		   &#125;</div><div class="line">	&#125;</div><div class="line">);</div></pre></td></tr></table></figure>
+</li>
+<li><p>设置默认目的地<br>一般情况下目的地都是相同的,这种情况下可以配置默认的目的地,就可以在发送消息时省略指定目的地.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> &lt;!-- 声明JmsTemplate模板 ,指定默认目的地--&gt;</div><div class="line">&lt;bean id=&quot;jmsTemplate&quot; class=&quot;org.springframework.jms.core.JmsTemplate&quot;&gt;</div><div class="line">	&lt;property name=&quot;connectionFactory&quot; ref=&quot;connectionFactory&quot; /&gt;</div><div class="line">	&lt;property name=&quot;defaultDestinationName&quot; value=&quot;spittle.alert.queue&quot; /&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>接收消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">try&#123;</div><div class="line">	ObjectMessage receiveMessage = (ObjectMessage)jmsTemplate.receive() ;</div><div class="line">	receiveMessage.getObject() ; //获取对象</div><div class="line">&#125;catch(JMSException jmsException)&#123;</div><div class="line">throw JmsUtils.convertJmsAccessException(jmsException);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>使用JmsTemplate接收消息的最大缺点是,receive()方法是同步的,这意味着接收者必须耐心等待消息的到来,因此,receive()方法会一直阻塞,直到有可用消息(或者直到超时).同步接收异步发送的消息,是不是感觉很怪异?<br>这就是消息驱动的POJO的用武之地,下面看看它是如何工作的.</p>
+<h3 id="消息驱动的POJO"><a href="#消息驱动的POJO" class="headerlink" title="消息驱动的POJO"></a>消息驱动的POJO</h3><h4 id="创建-配置消息监听器"><a href="#创建-配置消息监听器" class="headerlink" title="创建 ,配置消息监听器"></a>创建 ,配置消息监听器</h4><p>为POJO赋予消息接收能力的诀窍是在spring中把它配置为消息监听器.<br>POJO:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class MsgListenerPojo &#123;</div><div class="line"></div><div class="line">	public void processMessage()&#123;</div><div class="line">		//TODO</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>将其配置为消息监听器:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;!--配置消息监听  --&gt;</div><div class="line">&lt;bean id=&quot;msgListenerPojo&quot; class=&quot;com.mj.springAction.activeMq.MsgListenerPojo&quot; /&gt;</div><div class="line">&lt;jms:listener-container connection-factory=&quot;connectionFactory&quot;&gt;</div><div class="line">	&lt;jms:listener destination=&quot;spitter.alert.queue&quot;</div><div class="line">		 ref=&quot;msgListenerPojo&quot; method=&quot;processMessage&quot; /&gt;</div><div class="line">&lt;/jms:listener-container&gt;</div></pre></td></tr></table></figure></p>
+<p>消息监听器容器是一个特殊的bean,它会监控JMS目的地,并等待消息的到达,一旦有消息到达,它取出此消息,然后把消息传给任意一个对此感兴趣的消息监听器.当消息到达<code>spitter.alert.queue</code>,<code>msgListenerPojo</code>的<code>processMessage</code>方法会被触发.</p>
+<h3 id="使用基于消息的RPC"><a href="#使用基于消息的RPC" class="headerlink" title="使用基于消息的RPC"></a>使用基于消息的RPC</h3><p>除了远程服务,我们这里讨论下,如何通过队列和主题在应用之间发送消息.即如何通过jms作为传输通道进行远程调用.<br>Spring提供了两种基于消息的RPC方案:</p>
+<ol>
+<li>Spring自身提供了<code>JmsInvokerServiceExporter</code> ,可以把Bean导出为基于消息的服务.为客户端提供了<code>JmsInvokerProxyFactoryBean</code>来使用这些服务.</li>
+<li><code>Lingo</code>通过它的<code>JmsServiceExporter</code>和<code>JmsProxyFactoryBean</code>提供了类似的基于消息的远程方法调用.</li>
+</ol>
+<h4 id="使用Spring基于消息的RPC"><a href="#使用Spring基于消息的RPC" class="headerlink" title="使用Spring基于消息的RPC"></a>使用Spring基于消息的RPC</h4><h5 id="导出基于JMS的服务"><a href="#导出基于JMS的服务" class="headerlink" title="导出基于JMS的服务"></a>导出基于JMS的服务</h5><p>配置导出器的属性:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=&quot;alertServiceExporter&quot; class=&quot;org.springframework.jms.remoting.JmsInvokerServiceExporter&quot;</div><div class="line">p:service-ref=&quot;alertService&quot; </div><div class="line">p:serviceInterface=&quot;com.habuma.spitter.alerts.AlertService&quot;  /&gt;</div></pre></td></tr></table></figure></p>
+<p>配置JMS监听:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;jms:listener-container connection-factory=&quot;connectionFactory&quot;&gt;</div><div class="line">	&lt;jms:listener destination=&quot;spitter.alert.queue&quot;</div><div class="line">		 ref=&quot;alertServiceExporter&quot;  /&gt;</div><div class="line">&lt;/jms:listener-container&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="访问基于JMS的服务"><a href="#访问基于JMS的服务" class="headerlink" title="访问基于JMS的服务"></a>访问基于JMS的服务</h4><p>这个时候,基于JMS的提醒服务已经准备好了,等待队列名为<code>spitter.alert</code>的RPC消息到达.<br>在客户端<code>JmsInvokerProxyFactoryBean</code>用来访问服务.<br>为了访问提醒服务,我们可以像下面这样配置<code>JmsInvokerProxyFactoryBean</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=&quot;alertService&quot; class=&quot;org.springframework.jms.remoting.JmsInvokerProxyFactoryBean&quot;&gt;</div><div class="line">&lt;property name=&quot;connectionFactory&quot; ref=&quot;connectionFactory&quot; /&gt;</div><div class="line">&lt;property name=&quot;queueName&quot; value=&quot;spitter.alert.queue&quot; /&gt;</div><div class="line">&lt;property name=&quot;serviceInterface&quot; value=&quot;com.habuma.spitter.alerts.AlertService&quot; /&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="使用Lingo实现异步RPC"><a href="#使用Lingo实现异步RPC" class="headerlink" title="使用Lingo实现异步RPC"></a>使用<code>Lingo</code>实现异步RPC</h4><p>不同于<code>JMS invoker</code>,<code>Lingo</code>充分利用了JMS的<strong>异步特性</strong>实现了<strong>异步调用</strong>服务.<br><code>Lingo</code>并不是spring框架的一部分,它是基于Spring远程机制而建立的独立项目,提供了基于JMS的服务导出器和客户端代理.</p>
+<h5 id="导出异步服务"><a href="#导出异步服务" class="headerlink" title="导出异步服务"></a>导出异步服务</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=&quot;alertServiceExporter&quot; class=&quot;org.logicblaze.lingo.jms.JmsServiceExporter&quot;</div><div class="line">p:connectionFactory-ref=&quot;connectionFactory&quot;</div><div class="line">p:destination-ref=&quot;alertServiceQueue&quot;</div><div class="line">p:service-ref=&quot;alertService&quot; </div><div class="line">p:serviceInterface=&quot;com.habuma.spitter.alerts.AlertService&quot;  /&gt;</div></pre></td></tr></table></figure>
+<p>因为<code>JmsServiceExporter</code>在spring的监听容器中不能被用作消息监听器,所以我们必须通过<code>connectionFactory</code>建立连接工厂,通过<code>destination</code>配置目的地,这样,<code>JmsServiceExporter</code>才能知道如何发送消息.<br>注意,<code>destination-ref</code>属性的值是<code>javax.jms.Destination</code>,所以我们需要装配一个目的地bean的引用.如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;amq:queue id=&quot;alertServiceQueue&quot; physicalName=&quot;spitter.alert.queue&quot; /&gt;</div></pre></td></tr></table></figure></p>
+<h5 id="代理异步服务"><a href="#代理异步服务" class="headerlink" title="代理异步服务"></a>代理异步服务</h5><p><code>Lingo</code>的<code>JmsProxyFactoryBean</code>可以把没有返回值的方法作为异步方法.例如,基于<code>Lingo</code>的提醒服务的客户端可以像下面这样配置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=&quot;alertService&quot; class=&quot;org.logicblaze.lingo.jms.JmsProxyFactoryBean&quot;</div><div class="line">p:connectionFactory-ref=&quot;connectionFactory&quot;</div><div class="line">p:destination-ref=&quot;queue&quot;</div><div class="line">p:serviceInterface=&quot;com.habuma.spitter.alerts.AlertService&quot; &gt;</div><div class="line">	&lt;property name=&quot;metadataStrategy&quot;&gt;</div><div class="line">		&lt;bean id=&quot;metadataStrategy&quot; class=&quot;org.logicblaze.lingo.SimpleMetadataStrategy&quot;&gt;</div><div class="line">			&lt;constructor-arg value=&quot;true&quot; /&gt;</div><div class="line">		&lt;/bean&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>这里<code>SimpleMetadataStrategy</code>是<code>Lingo</code>决定哪些方法应该作为异步单向操作的机制,它的构造器只有一个<code>Boolean</code>型的入参,该入参标识了无返回值的方法是否为异步,我们这里配置入参为<code>true</code>,标识这个服务的所有<code>void</code>方法都视为单向方法,因此可以被异步调用并立即返回.<br>如果配置为<code>false</code>或者根本不配置<code>JmsProxyFactoryBean</code>的<code>metadataStrategy</code>属性,那所有的服务方法都是同步的.如果这样配置,就和spring的<code>JmsInvokerServiceProxy</code>完全等价了.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/spring/" rel="tag">#spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/29/Spring初识/" rel="next" title="Spring初识">
+                <i class="fa fa-chevron-left"></i> Spring初识
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/29/Spring远程服务/" rel="prev" title="Spring远程服务">
+                Spring远程服务 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/10/29/Spring消息JMS/"
+           data-title="Spring 消息JMS" data-url="http://yoursite.com/2017/10/29/Spring消息JMS/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="jing Ming" />
+          <p class="site-author-name" itemprop="name">jing Ming</p>
+          <p class="site-description motion-element" itemprop="description">只有用心灵才能看得清事物本质，真正重要的东西是肉眼无法看见的!</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JMS简介"><span class="nav-number">1.</span> <span class="nav-text">JMS简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在Spring中搭建消息代理"><span class="nav-number">2.</span> <span class="nav-text">在Spring中搭建消息代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建连接工厂"><span class="nav-number">2.1.</span> <span class="nav-text">创建连接工厂</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息驱动的POJO"><span class="nav-number">3.</span> <span class="nav-text">消息驱动的POJO</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建-配置消息监听器"><span class="nav-number">3.1.</span> <span class="nav-text">创建 ,配置消息监听器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用基于消息的RPC"><span class="nav-number">4.</span> <span class="nav-text">使用基于消息的RPC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Spring基于消息的RPC"><span class="nav-number">4.1.</span> <span class="nav-text">使用Spring基于消息的RPC</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#导出基于JMS的服务"><span class="nav-number">4.1.1.</span> <span class="nav-text">导出基于JMS的服务</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问基于JMS的服务"><span class="nav-number">4.2.</span> <span class="nav-text">访问基于JMS的服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Lingo实现异步RPC"><span class="nav-number">4.3.</span> <span class="nav-text">使用Lingo实现异步RPC</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#导出异步服务"><span class="nav-number">4.3.1.</span> <span class="nav-text">导出异步服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代理异步服务"><span class="nav-number">4.3.2.</span> <span class="nav-text">代理异步服务</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jing Ming</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jingduoshuo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("zFSdtseDLPAACGnA5S1smCjc-gzGzoHsz", "nrBEdQBNssakuop3Hpl6DXQN");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

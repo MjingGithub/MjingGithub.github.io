@@ -1,0 +1,1018 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="vue,webpack," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="vue-cli搭建项目:####搭建项目 命令 :vue init &amp;lt;template-name&amp;gt; &amp;lt;project-name&amp;gt;.    template-name有几个: 1. **webpack** - A full-featured Webpack + vue-loader setup with hot reload, linting, testing &amp;amp; c">
+<meta name="keywords" content="vue,webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-cli搭建前端项目学习记录">
+<meta property="og:url" content="http://yoursite.com/2017/10/29/vue学习笔记/index.html">
+<meta property="og:site_name" content="Mjing&#39;s Blog">
+<meta property="og:description" content="vue-cli搭建项目:####搭建项目 命令 :vue init &amp;lt;template-name&amp;gt; &amp;lt;project-name&amp;gt;.    template-name有几个: 1. **webpack** - A full-featured Webpack + vue-loader setup with hot reload, linting, testing &amp;amp; c">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-29T07:59:51.938Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue-cli搭建前端项目学习记录">
+<meta name="twitter:description" content="vue-cli搭建项目:####搭建项目 命令 :vue init &amp;lt;template-name&amp;gt; &amp;lt;project-name&amp;gt;.    template-name有几个: 1. **webpack** - A full-featured Webpack + vue-loader setup with hot reload, linting, testing &amp;amp; c">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/29/vue学习笔记/"/>
+
+  <title> vue-cli搭建前端项目学习记录 | Mjing's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8bc0202c2f4b38c6b6d3abb169f0a7b6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Mjing's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Mjing</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                vue-cli搭建前端项目学习记录
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-10-29T16:17:52+08:00" content="2017-10-29">
+              2017-10-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/10/29/vue学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/29/vue学习笔记/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/10/29/vue学习笔记/" class="leancloud_visitors" data-flag-title="vue-cli搭建前端项目学习记录">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="vue-cli搭建项目"><a href="#vue-cli搭建项目" class="headerlink" title="vue-cli搭建项目:"></a>vue-cli搭建项目:</h3><p>####搭建项目</p>
+<p><strong>命令</strong> :<code>vue init &lt;template-name&gt; &lt;project-name&gt;</code>.<br>    template-name有几个:</p>
+<pre><code>1. **webpack** - A full-featured Webpack + vue-loader setup with hot reload, linting, testing &amp; css extraction.
+2. **webpack-simple** - A simple Webpack + vue-loader setup for quick prototyping.
+3.**browserify** - A full-featured Browserify + vueify setup with hot-reload, linting &amp; unit testing.
+4.**browserify-simple** - A simple Browserify + vueify setup for quick prototyping.
+5.**pwa** - PWA template for vue-cli based on the webpack template
+6.**simple** - The simplest possible Vue setup in a single HTML file.
+</code></pre><p><strong>cd 到项目目录下,执行npm install安装依赖</strong>.<br><strong>npm run dev.启动8080端口服务器</strong>.<br><a id="more"></a>    </p>
+<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><p><code>npm install --save xxx@version</code> 安装依赖到package.json的dependencies下面.<br><code>npm install --save-dev xxx@version</code> 安装依赖到package.json的devDependencies下面.<br><strong>安装原则是:项目运行时需要用到的包使用–save，否则使用–save-dev。</strong></p>
+<h4 id="学习vue-router"><a href="#学习vue-router" class="headerlink" title="学习vue-router"></a>学习<a href="https://router.vuejs.org/zh-cn/essentials/dynamic-matching.html" target="_blank" rel="external">vue-router</a></h4><p>自己动手利用vue-router搭建了一个douban-demo的vue应用:<a href="https://github.com/MjingGithub/douban-demo" target="_blank" rel="external">douban-demo</a><br>关键词:</p>
+<blockquote>
+<p>动态路由,路由嵌套,编程式导航,命名路由,命名视图,重定向和别名,向路由组件传递props,HTML5 histoy模式<br>过渡动效,数据获取,滚动行为,懒加载</p>
+</blockquote>
+<p>####git提交的步骤<br>git init<br>git add .<br>git commit -m ‘first commit’<br>git remote add origin git@github.com:MjingGithub/XXX.git<br>git push -u origin master<br>  更新.gitignore并使之生效方法<br>git rm -r –cached .<br>git add -A<br>git commit -m “update .gitignore”</p>
+<p>####vuex学习:<a href="https://vuex.vuejs.org/zh-cn/getting-started.html" target="_blank" rel="external">vuex</a><br>vue.js中文社区:<a href="https://www.vue-js.com/getstart" target="_blank" rel="external">https://www.vue-js.com/getstart</a><br>vue.js项目中使用引入js的形式,使用vuex的格式如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">//make sure to call Vue.use(Vuex) if using a module system</div><div class="line">const store = new Vuex.Store(&#123;</div><div class="line">  state: &#123;</div><div class="line">    count: 0</div><div class="line">  &#125;,</div><div class="line">  mutations: &#123;</div><div class="line">  	increment: state =&gt; state.count++,</div><div class="line">    decrement: state =&gt; state.count--</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line">new Vue(&#123;</div><div class="line">  el: &apos;#app&apos;,</div><div class="line">  computed: &#123;</div><div class="line">    count () &#123;</div><div class="line">	    return store.state.count</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  methods: &#123;</div><div class="line">    increment () &#123;</div><div class="line">      store.commit(&apos;increment&apos;)</div><div class="line">    &#125;,</div><div class="line">    decrement () &#123;</div><div class="line">    	store.commit(&apos;decrement&apos;)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<h4 id="下载最新js文件cdn方法"><a href="#下载最新js文件cdn方法" class="headerlink" title="下载最新js文件cdn方法"></a>下载最新js文件cdn方法</h4><p><em><a href="https://unpkg.com/vuex" target="_blank" rel="external">https://unpkg.com/vuex</a></em>加上框架的名称.</p>
+<p><a href="http://www.cnblogs.com/axl234/p/5899137.html" target="_blank" rel="external">vue-resource使用</a></p>
+<p><a href="https://unpkg.com/vue-resource@1.3.4/dist/vue-resource.min.js" target="_blank" rel="external">vue-resouce cdn</a></p>
+<h4 id="多页面vue-cli项目搭建"><a href="#多页面vue-cli项目搭建" class="headerlink" title="多页面vue-cli项目搭建"></a>多页面vue-cli项目搭建</h4><p>demo:<br><a href="http://blog.lanchenglv.com/article/vue2-webpack2-cli-vux2-multe-page.html" target="_blank" rel="external">http://blog.lanchenglv.com/article/vue2-webpack2-cli-vux2-multe-page.html</a><br><a href="https://github.com/bluefox1688/vue-cli-multi-page" target="_blank" rel="external">https://github.com/bluefox1688/vue-cli-multi-page</a></p>
+<p>####搭建自己的多页面应用<br><strong>文件配置详细介绍</strong>:   <a href="http://www.cnblogs.com/libin-1/p/6596810.html" target="_blank" rel="external">http://www.cnblogs.com/libin-1/p/6596810.html</a></p>
+<p><strong>webpack入门指迷</strong>:<a href="https://segmentfault.com/a/1190000002551952" target="_blank" rel="external">https://segmentfault.com/a/1190000002551952</a>  <a href="https://github.com/petehunt/webpack-howto" target="_blank" rel="external">https://github.com/petehunt/webpack-howto</a><br><strong>webpack最新官网教程</strong>:<a href="https://doc.webpack-china.org/guides/getting-started" target="_blank" rel="external">https://doc.webpack-china.org/guides/getting-started</a><br><strong>移动端vue组件库</strong>:<a href="https://vux.li/#/" target="_blank" rel="external">https://vux.li/#/</a><br><strong>babel-loader作用:</strong>一个js编译器，把浏览器不支持的js转译成浏览器支持的js.<br><strong>source map </strong><br><a href="http://blog.teamtreehouse.com/introduction-source-maps" target="_blank" rel="external">http://blog.teamtreehouse.com/introduction-source-maps</a><br><a href="https://doc.webpack-china.org/configuration/devtool" target="_blank" rel="external">https://doc.webpack-china.org/configuration/devtool</a></p>
+<p><strong>express:</strong>Express 是一个小巧且灵活的 Node.js Web应用框架，它有一套健壮的特性，可用于开发单页、多页和混合Web应用。<br><strong>express入门简介:</strong><a href="http://blog.jobbole.com/56121/" target="_blank" rel="external">http://blog.jobbole.com/56121/</a></p>
+<p><strong>Node.js的process模块:</strong><br>process模块用来与当前进程互动，可以通过全局变量process访问，不必使用require命令加载。它是一个EventEmitter对象的实例。<br>process对象提供一系列属性，用于返回系统信息。</p>
+<ul>
+<li>process.pid：当前进程的进程号。</li>
+<li>process.version：Node的版本，比如v0.10.18。</li>
+<li>process.platform：当前系统平台，比如Linux。</li>
+<li>process.title：默认值为“node”，可以自定义该值。</li>
+<li>process.argv：当前进程的命令行参数数组。</li>
+<li>process.env：指向当前shell的环境变量，比如process.env.HOME。</li>
+<li>process.execPath：运行当前进程的可执行文件的绝对路径。</li>
+<li>process.stdout：指向标准输出。</li>
+<li>process.stdin：指向标准输入。</li>
+<li>process.stderr：指向标准错误。</li>
+</ul>
+<p><strong>node.js path模块讲解:</strong><a href="https://nodejs.org/api/path.html" target="_blank" rel="external">https://nodejs.org/api/path.html</a></p>
+<p>####vue-loader学习<br><strong>中文文档:</strong><a href="https://vue-loader.vuejs.org/zh-cn/" target="_blank" rel="external">https://vue-loader.vuejs.org/zh-cn/</a><br><strong>定义:</strong>vue-loader 是一个 Webpack 的 loader，可以将.Vue 组件转换为 JavaScript 模块.</p>
+<p>它有一些很酷的特性：</p>
+<ul>
+<li>默认支持 ES2015；</li>
+<li>允许对 Vue 组件的组成部分使用其它 Webpack loader，比如对 <code>&lt;style&gt;</code>使用 SASS 和对<code>&lt;template&gt;</code> 使用 Jade；</li>
+<li>vue 文件中允许自定义节点，然后使用自定义的 loader 进行处理；</li>
+<li>把 <code>&lt;style&gt;</code>和 <code>&lt;template&gt;</code> 中的静态资源当作模块来对待，并使用 Webpack loader 进行处理；</li>
+<li>对每个组件模拟出 CSS 作用域；</li>
+<li>支持开发期组件的热重载。</li>
+</ul>
+<p>简而言之，编写 Vue.js 应用程序时，组合使用 Webpack 和 vue-loader 能带来一个现代，灵活并且非常强大的前端工作流程。</p>
+<p>####生产环境build想要file直接打开可运行技巧<br>修改<code>config/index.js</code>的<code>assetsPublicPath</code>设置为打包位置的绝对路径就可以了.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Tip: built files are meant to be served over an HTTP server.</div><div class="line">Opening index.html over file:// won&apos;t work.</div></pre></td></tr></table></figure></p>
+<p><strong>解决办法为:</strong><br>  <code>assetsPublicPath: &#39;../&#39;</code></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue-webpack/" rel="tag">#vue,webpack</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/29/Spring远程服务/" rel="next" title="Spring远程服务">
+                <i class="fa fa-chevron-left"></i> Spring远程服务
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/29/vi和vim编辑器/" rel="prev" title="vi和vim编辑器基本操作">
+                vi和vim编辑器基本操作 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/10/29/vue学习笔记/"
+           data-title="vue-cli搭建前端项目学习记录" data-url="http://yoursite.com/2017/10/29/vue学习笔记/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="jing Ming" />
+          <p class="site-author-name" itemprop="name">jing Ming</p>
+          <p class="site-description motion-element" itemprop="description">只有用心灵才能看得清事物本质，真正重要的东西是肉眼无法看见的!</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-cli搭建项目"><span class="nav-number">1.</span> <span class="nav-text">vue-cli搭建项目:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装依赖"><span class="nav-number">1.1.</span> <span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#学习vue-router"><span class="nav-number">1.2.</span> <span class="nav-text">学习vue-router</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下载最新js文件cdn方法"><span class="nav-number">1.3.</span> <span class="nav-text">下载最新js文件cdn方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多页面vue-cli项目搭建"><span class="nav-number">1.4.</span> <span class="nav-text">多页面vue-cli项目搭建</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jing Ming</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jingduoshuo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("zFSdtseDLPAACGnA5S1smCjc-gzGzoHsz", "nrBEdQBNssakuop3Hpl6DXQN");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

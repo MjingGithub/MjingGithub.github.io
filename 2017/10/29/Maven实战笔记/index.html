@@ -1,0 +1,1032 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="maven," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一个parent-pom例子:">
+<meta name="keywords" content="maven">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maven实战笔记">
+<meta property="og:url" content="http://yoursite.com/2017/10/29/Maven实战笔记/index.html">
+<meta property="og:site_name" content="Mjing&#39;s Blog">
+<meta property="og:description" content="一个parent-pom例子:">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-09-27T04:07:29.967Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Maven实战笔记">
+<meta name="twitter:description" content="一个parent-pom例子:">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/29/Maven实战笔记/"/>
+
+  <title> Maven实战笔记 | Mjing's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8bc0202c2f4b38c6b6d3abb169f0a7b6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Mjing's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Mjing</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Maven实战笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-10-29T16:17:52+08:00" content="2017-10-29">
+              2017-10-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/maven/" itemprop="url" rel="index">
+                    <span itemprop="name">maven</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/10/29/Maven实战笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/29/Maven实战笔记/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/10/29/Maven实战笔记/" class="leancloud_visitors" data-flag-title="Maven实战笔记">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一个parent-pom例子:<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div></pre></td><td class="code"><pre><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line">	&lt;groupId&gt;com.mj.maven&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;parentpom-war&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;</div><div class="line">	&lt;packaging&gt;pom&lt;/packaging&gt;</div><div class="line"></div><div class="line">	&lt;name&gt;parentpom-war&lt;/name&gt;</div><div class="line">	&lt;url&gt;http://wiki.inzwc.com/tech/wiki/index.php/Maven&lt;/url&gt;</div><div class="line"></div><div class="line">	&lt;properties&gt;</div><div class="line">		&lt;slf4j.version&gt;1.7.9&lt;/slf4j.version&gt;</div><div class="line">		&lt;logback.version&gt;1.1.3&lt;/logback.version&gt;</div><div class="line">		&lt;spring.version&gt;4.2.2.RELEASE&lt;/spring.version&gt;</div><div class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">	&lt;/properties&gt;</div><div class="line">	&lt;build&gt;</div><div class="line">		&lt;plugins&gt;</div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</div><div class="line">				&lt;version&gt;3.3&lt;/version&gt;</div><div class="line">				&lt;configuration&gt;</div><div class="line">					&lt;source&gt;$&#123;java.version&#125;&lt;/source&gt;</div><div class="line">					&lt;target&gt;$&#123;java.version&#125;&lt;/target&gt;</div><div class="line">					&lt;encoding&gt;UTF-8&lt;/encoding&gt;</div><div class="line">				&lt;/configuration&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line"></div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;maven-resources-plugin&lt;/artifactId&gt;</div><div class="line">				&lt;version&gt;2.7&lt;/version&gt;</div><div class="line">				&lt;configuration&gt;</div><div class="line">					&lt;encoding&gt;UTF-8&lt;/encoding&gt;</div><div class="line">				&lt;/configuration&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line"></div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;artifactId&gt;maven-eclipse-plugin&lt;/artifactId&gt;</div><div class="line">				&lt;version&gt;2.10&lt;/version&gt;</div><div class="line">				&lt;configuration&gt;</div><div class="line">					&lt;downloadSources&gt;true&lt;/downloadSources&gt;</div><div class="line">					&lt;downloadJavadocs&gt;false&lt;/downloadJavadocs&gt;</div><div class="line">					&lt;additionalConfig&gt;</div><div class="line">						&lt;file&gt;</div><div class="line">							&lt;name&gt;.settings/org.eclipse.core.resources.prefs&lt;/name&gt;</div><div class="line">							&lt;content&gt;</div><div class="line">                                    &lt;![CDATA[</div><div class="line">eclipse.preferences.version=1</div><div class="line">encoding//&lt;project&gt;=UTF-8</div><div class="line">                            ]]&gt;</div><div class="line">							&lt;/content&gt;</div><div class="line">						&lt;/file&gt;</div><div class="line">					&lt;/additionalConfig&gt;</div><div class="line">				&lt;/configuration&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line"></div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;</div><div class="line">				&lt;version&gt;2.6&lt;/version&gt;</div><div class="line">				&lt;configuration&gt;</div><div class="line">					&lt;classifier&gt;$&#123;project.classifier&#125;&lt;/classifier&gt;</div><div class="line">					&lt;packagingExcludes&gt;</div><div class="line">						WEB-INF/lib/commons-logging-*.jar,</div><div class="line">						%regex[WEB-INF/lib/log4j-(?!over-slf4j).*.jar,</div><div class="line">						WEB-INF/lib/spring-asm-*.jar]</div><div class="line">					&lt;/packagingExcludes&gt;</div><div class="line">				&lt;/configuration&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line"></div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;groupId&gt;org.eclipse.jetty&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;jetty-maven-plugin&lt;/artifactId&gt;</div><div class="line">				&lt;version&gt;9.2.9.v20150224&lt;/version&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line">		&lt;/plugins&gt;</div><div class="line">	&lt;/build&gt;</div><div class="line"></div><div class="line">	&lt;dependencies&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-test&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</div><div class="line">			&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;com.aicaipiao&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;hessian-aicaipiao&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;3.2.3-SNAPSHOT&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;$&#123;slf4j.version&#125;&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;jcl-over-slf4j&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;$&#123;slf4j.version&#125;&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;log4j-over-slf4j&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;$&#123;slf4j.version&#125;&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;logback-core&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;$&#123;logback.version&#125;&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;logback-classic&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;$&#123;logback.version&#125;&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">	&lt;/dependencies&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure></p>
+<p>maven中央仓库地址:<code>http://mvnrepository.com/</code><br>maven是一个项目构建工具,依赖管理工具,项目信息管理工具.大大简化了我们的开发工作.<br> 最佳实践是,将<code>M2_HOME</code>下面conf下面的<code>settings.xml</code>复制到~/.m2/下面,并且修改相应的配置信息.</p>
+<p>###maven安装与基本配置<br>有时候你的公司基于安全考虑,要求你使用安全代理访问互联网,这时候,需要为MAVEN配置HTTP代理,才能让他访问外部仓库,以下载所需要的资源.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;proxy&gt;</div><div class="line">      &lt;id&gt;myproxy&lt;/id&gt;</div><div class="line">      &lt;active&gt;true&lt;/active&gt;</div><div class="line">      &lt;protocol&gt;http&lt;/protocol&gt;</div><div class="line">      &lt;host&gt;nexus.tech.2ceeo.com/&lt;/host&gt;</div><div class="line">      &lt;port&gt;8022&lt;/port&gt;</div><div class="line"> &lt;!--&lt;username&gt;liaoyuding&lt;/username&gt;</div><div class="line">	    &lt;password&gt;123456&lt;/password&gt;  &lt;nonProxyHosts&gt;nexus.tech.2caipiao.com&lt;/nonProxyHosts&gt;</div><div class="line">	    --&gt;</div><div class="line">    &lt;/proxy&gt;</div></pre></td></tr></table></figure></p>
+<p>proxies下可以有多个proxy元素,但是默认第一个被激活的proxy会生效,可以用|来分割多个主机.<code>nonProxyHosts</code>用来指定哪些主机名不需要代理.<br><em>安装m2eclipse</em><br><code>http://download.eclipse.org/technology/m2e/releases/</code><br><em>MAVEN安装最佳实践</em></p>
+<ol>
+<li>设置MAVEN_OPTS环境变量<br>通常设置为<code>-Xms128m -Xms512m</code>,因为java默认的最大可用内存往往不能够满足Maven运行的需要.</li>
+<li>配置用户范围的<code>settings.xml</code><br><code>M2_HOME/conf/settings.xml</code>是全局范围的,<code>~/.m2/settings.xml</code>是用户范围的.在用户目录下.</li>
+<li>不要使用IDE内嵌的maven</li>
+</ol>
+<h3 id="maven使用入门"><a href="#maven使用入门" class="headerlink" title="maven使用入门"></a>maven使用入门</h3><h4 id="编写POM"><a href="#编写POM" class="headerlink" title="编写POM"></a>编写POM</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">  &lt;groupId&gt;com.mj&lt;/groupId&gt;</div><div class="line">  &lt;artifactId&gt;springAction&lt;/artifactId&gt;</div><div class="line">  &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line"> &lt;packaging&gt;war&lt;/packaging&gt;</div><div class="line"></div><div class="line">  &lt;name&gt;springAction&lt;/name&gt;</div><div class="line">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</div><div class="line"></div><div class="line">&lt;properties&gt;</div><div class="line">		&lt;!-- 打包名称定义. --&gt;</div><div class="line">		&lt;project.classifier&gt;&lt;/project.classifier&gt;</div><div class="line">		&lt;!-- Plugin的属性定义 --&gt;</div><div class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">		&lt;maven.compile.encoding&gt;UTF-8&lt;/maven.compile.encoding&gt;</div><div class="line">		&lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;</div><div class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">		&lt;!-- 版本定义 --&gt;</div><div class="line">	&lt;spring.version&gt;3.2.9.RELEASE&lt;/spring.version&gt;</div><div class="line">	&lt;/properties&gt;</div><div class="line"></div><div class="line">  &lt;dependencies&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;junit&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;3.8.1&lt;/version&gt;</div><div class="line">      &lt;scope&gt;test&lt;/scope&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">  &lt;/dependencies&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
+<h4 id="编写测试代码"><a href="#编写测试代码" class="headerlink" title="编写测试代码"></a>编写测试代码</h4><p>因为maven的核心插件之一-compile默认只支持java1.3.所以配置插件使其支持java1.5.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;build&gt;</div><div class="line">	&lt;plugins&gt;</div><div class="line">		&lt;plugin&gt;</div><div class="line">		&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</div><div class="line">		&lt;configuration&gt;</div><div class="line">			&lt;source&gt;1.5&lt;/source&gt;</div><div class="line">			&lt;target&gt;1.5&lt;/target&gt;</div><div class="line">		&lt;/configuration&gt;</div><div class="line">		&lt;/plugin&gt;</div><div class="line">	&lt;/plugins&gt;</div><div class="line">&lt;/build&gt;</div></pre></td></tr></table></figure></p>
+<p>test命令:<code>mvn clean test</code></p>
+<p>####打包和运行<br>编译:<code>mvn clean compile</code><br>打包:<code>mvn clean package</code><br>如果需要别的项目可以引用该项目则需要一个安装的步骤:<code>mvn clean install</code></p>
+<p>有<code>main</code>方法的项目打包生成的默认jar包是不能直接运行的,因为带有<code>main</code>方法的类信息不会添加到<code>manifest</code>中(打开jar文件中的<code>META-INF/MANIFEST.MF</code>文件,将无法看到<code>Main-Class</code>一行).为了生成可执行的jar文件,需要借助<code>maven-shade-plugin</code>,配置该插件如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;plugin&gt;</div><div class="line">			&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;2.1&lt;/version&gt;</div><div class="line">			&lt;executions&gt;</div><div class="line">                    &lt;execution&gt;</div><div class="line">                        &lt;phase&gt;package&lt;/phase&gt;</div><div class="line">                        &lt;goals&gt;</div><div class="line">                            &lt;goal&gt;shade&lt;/goal&gt;</div><div class="line">                        &lt;/goals&gt;</div><div class="line">                        &lt;configuration&gt;</div><div class="line">                            &lt;transformers&gt;</div><div class="line">                                &lt;transformer</div><div class="line">                                    implementation=&quot;org.apache.maven.plugins.shade.resource.ManifestResourceTransformer&quot;&gt;</div><div class="line">                                    &lt;mainClass&gt;hello.HelloWorld&lt;/mainClass&gt;</div><div class="line">                                &lt;/transformer&gt;</div><div class="line">                            &lt;/transformers&gt;</div><div class="line">                        &lt;/configuration&gt;</div><div class="line">                    &lt;/execution&gt;</div><div class="line">                &lt;/executions&gt;</div><div class="line">		&lt;/plugin&gt;</div></pre></td></tr></table></figure></p>
+<p>现在在target目录下有2个jar.一个是原始的,一个是可以直接运行的.<br>到项目目录下执行:<code>java -jar target\hello-world-1.0-SNAPSHOT.jar</code><br>会执行main方法,看到结果.</p>
+<p>####使用Archetype生成项目骨架<br><code>mvn archetype:generate</code></p>
+<h4 id="依赖范围"><a href="#依赖范围" class="headerlink" title="依赖范围"></a>依赖范围</h4><p>依赖范围就是用来控制依赖与这三种classpath(编译classpath,测试calsspath,运行classpath)的关系,maven有以下几种依赖范围:</p>
+<ol>
+<li><strong>compile</strong>:编译依赖范围,默认情况下是这个,此种范围,对编译,测试,运行都有效.如<code>spring-core</code>.</li>
+<li><strong>test</strong>:测试依赖范围,只用于测试classpath.在编译和运行时无法使用此依赖.典型的例子是<code>Junit</code>.</li>
+<li><strong>provided</strong>:已提供依赖范围.这种只对编译和测试有效,运行时无效.典型的例子是<code>servlet-api</code>,编译和测试项目的时候需要该依赖,但是运行时由于容器已经提供,就不需要maven重复的引入一遍.</li>
+<li><strong>runtime</strong>:运行时依赖范围.此种只对测试和运行时有效.但在编译主代码时无效,典型的例子是<code>jdbc</code>驱动实现,项目主代码的编译只需要jdk提供的jdbc接口,只有在执行测试或者运行项目的时候才需要实现上述接口的具体jdbc驱动.</li>
+<li><strong>system</strong>:系统依赖范围.该依赖与三种classpath的关系和provided依赖范围完全一致.但是需要使用systemPath显式指定依赖位置,造成构建的不可移植性,因此谨慎使用.</li>
+<li><strong>import(maven2.0.9及以上)</strong>:导入依赖范围.该依赖范围不会对3种classpath产生实际的影响.</li>
+</ol>
+<h4 id="优化依赖"><a href="#优化依赖" class="headerlink" title="优化依赖"></a>优化依赖</h4><p>查看所有依赖:<code>mvn dependency:list</code><br>查看依赖树:<code>mvn dependency:tree</code><br>分析依赖查找潜在风险:<code>mvn dependency:analyze</code></p>
+<h3 id="maven仓库"><a href="#maven仓库" class="headerlink" title="maven仓库"></a>maven仓库</h3><h4 id="中央仓库"><a href="#中央仓库" class="headerlink" title="中央仓库"></a>中央仓库</h4><p>maven安装时自带了中央仓库的默认配置,通过解压<code>$M2_HOME/lib/maven-model-builder-3.3.3.jar</code>,然后访问<code>org\apache\maven\model\pom-4.0.0.xml</code>,可以看到下面的配置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;repositories&gt;</div><div class="line">  &lt;repository&gt;</div><div class="line">    &lt;id&gt;central&lt;/id&gt;</div><div class="line">    &lt;name&gt;Central Repository&lt;/name&gt;</div><div class="line">    &lt;url&gt;https://repo.maven.apache.org/maven2&lt;/url&gt;</div><div class="line">    &lt;layout&gt;default&lt;/layout&gt;</div><div class="line">    &lt;snapshots&gt;</div><div class="line">      &lt;enabled&gt;false&lt;/enabled&gt;</div><div class="line">    &lt;/snapshots&gt;</div><div class="line">  &lt;/repository&gt;</div><div class="line">&lt;/repositories&gt;</div></pre></td></tr></table></figure></p>
+<p>这是所有maven项目都会继承的超级POM,false表示不从该仓库下载快照版本的构件.</p>
+<h4 id="私服"><a href="#私服" class="headerlink" title="私服"></a>私服</h4><p>私服是一种特殊的远程仓库,它是架设在局域网内的仓库服务,私服代理广域网上的远程仓库,供局域网内的Maven用户使用.当maven需要下载构件的时候,它从私服请求,如果私服上不存在该构件,则从外部的远程仓库下载,缓存在私服上之后,再供请求使用.另外,一些无法从外部仓库下载的构件也能从本地上传到私服上供大家使用.</p>
+<p>私服可以帮你:</p>
+<ol>
+<li>节省自己的外网带宽.</li>
+<li>加速maven构建.</li>
+<li>部署第三方构件.</li>
+<li>提高稳定性,增强控制.</li>
+<li>降低中央仓库的负荷.</li>
+</ol>
+<h4 id="远程仓库的配置"><a href="#远程仓库的配置" class="headerlink" title="远程仓库的配置"></a>远程仓库的配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;repository&gt;</div><div class="line">     &lt;id&gt;jboss&lt;/id&gt;</div><div class="line">     &lt;name&gt;JBoss Repository&lt;/name&gt;</div><div class="line">     &lt;url&gt;https://repository.jboss.com/maven2&lt;/url&gt;</div><div class="line">     &lt;releases&gt;</div><div class="line">      &lt;enable&gt;true&lt;/enable&gt;</div><div class="line">     &lt;/releases&gt;</div><div class="line">      &lt;snapshots&gt;</div><div class="line">       &lt;enabled&gt;false&lt;/enabled&gt;</div><div class="line">     &lt;/snapshots&gt;</div><div class="line">     &lt;layout&gt;default&lt;/layout&gt;</div><div class="line">   &lt;/repository&gt;</div></pre></td></tr></table></figure>
+<p>在<code>repositories</code>下面,可以使用<code>repository</code>声明一个或多个远程仓库,id都是唯一的,Maven自带的中央仓库的id为<code>central</code> ,所以自己配置的不能和central同名,否则会覆盖中央仓库的配置.<br>该配置例子中的,<code>releases</code>和<code>snapshots</code>元素比较重要,它们用来控制maven对发布版构件和快照版构件的下载.<br>例子中maven只会从jboss下载发布版的构件,而不会下载快照版的.</p>
+<p>####远程仓库的认证<br> 大部分远程仓库无需认证就可以访问,但是一般组织内部的maven服务器因为安全考虑会为用户配置一组用户名和密码.<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;localRepository&gt;D:/Program Files/repo-jing.ming/.m2/repository&lt;/localRepository&gt;</div><div class="line"> &lt;servers&gt;</div><div class="line">	&lt;server&gt;</div><div class="line">   &lt;id&gt;aicai-release&lt;/id&gt;</div><div class="line">   &lt;username&gt;liaoyuding&lt;/username&gt;</div><div class="line">   &lt;password&gt;123456&lt;/password&gt;</div><div class="line"> &lt;/server&gt;</div><div class="line"> &lt;server&gt;</div><div class="line">   &lt;id&gt;aicai-snapshot&lt;/id&gt;</div><div class="line">  &lt;username&gt;liaoyuding&lt;/username&gt;</div><div class="line">   &lt;password&gt;123456&lt;/password&gt;</div><div class="line">&lt;/server&gt;</div><div class="line"> &lt;server&gt;</div><div class="line">   &lt;id&gt;thirdparty&lt;/id&gt;</div><div class="line">   &lt;username&gt;liaoyuding&lt;/username&gt;</div><div class="line">   &lt;password&gt;123456&lt;/password&gt;</div><div class="line">&lt;/server&gt;</div><div class="line">&lt;/servers&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="部署至远程仓库"><a href="#部署至远程仓库" class="headerlink" title="部署至远程仓库"></a>部署至远程仓库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;!--部署至远程仓库  --&gt;</div><div class="line">&lt;distributionManagement&gt;</div><div class="line">	&lt;repository&gt;</div><div class="line">		&lt;id&gt;proj-releases&lt;/id&gt;</div><div class="line">		&lt;name&gt;Proj Release Repository&lt;/name&gt;</div><div class="line">		&lt;url&gt;http://192.168.1.100/content/repositories/proj-releases&lt;/url&gt;</div><div class="line">	&lt;/repository&gt;</div><div class="line">	&lt;snapshotRepository&gt;</div><div class="line">	    &lt;id&gt;proj-snapshots&lt;/id&gt;</div><div class="line">		&lt;name&gt;Proj Snapshot Repository&lt;/name&gt;</div><div class="line">		&lt;url&gt;http://192.168.1.100/content/repositories/proj-snapshots&lt;/url&gt;</div><div class="line">	&lt;/snapshotRepository&gt;</div><div class="line">&lt;/distributionManagement&gt;</div></pre></td></tr></table></figure>
+<p>往远程仓库部署构件的时候.需要认证.认证的方式是在<code>settings.xml</code>中创建一个server元素,其id与仓库的id匹配,并配置正确的认证信息.从远程下载个部署,认证配置的方式是一样的.<br>配置正确后,执行<code>mvn clean deploy</code>,maven就会将项目构建输出的构件部署到对应的远程仓库.</p>
+<p>####镜像<br>如果仓库x可以提供仓库y存储的所有内容,那么就可以认为x是y的一个镜像.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;mirror&gt;</div><div class="line">     &lt;id&gt;maven.net.cn&lt;/id&gt;</div><div class="line">     &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;</div><div class="line">     &lt;url&gt;http://maven.net.cn/content/groups/public/&lt;/url&gt;</div><div class="line">   &lt;/mirror&gt;</div></pre></td></tr></table></figure></p>
+<p><code>mirrorOf</code>为’central’,表示对于中央仓库central的请求都会转至该镜像.</p>
+<p>但是更常见的镜像配置是结合私服:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;mirror&gt;</div><div class="line">      &lt;id&gt;nexus&lt;/id&gt;</div><div class="line">      &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</div><div class="line">      &lt;url&gt;http://nexus.tech.sss.com/content/groups/public&lt;/url&gt;</div><div class="line">    &lt;/mirror&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="生命周期和插件"><a href="#生命周期和插件" class="headerlink" title="生命周期和插件"></a>生命周期和插件</h3><h4 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h4><p>maven生命周期介绍:<code>http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html</code></p>
+<p>maven拥有三套相互独立的生命周期,它们分别为<code>clean</code>,<code>default</code>,<code>site</code>.<code>clean</code>生命周期的目的是清理项目,<code>default</code>生命周期的目的是构建项目,<code>site</code>生命周期的目的是建立项目站点.每个生命周期包含一些阶段,这些阶段是有顺序的,并且后面的阶段依赖前面的阶段,用户和maven最直接的交互方式是调用这些生命周期的阶段.<br>这三个阶段是相互独立的,例如,当用户调用<code>clean</code>生命周期的<code>clean</code>阶段时,不会触发<code>default</code>生命周期的任何阶段.</p>
+<p>#####clean生命周期<br>这个阶段主要工作是清理项目,它包含三个阶段:</p>
+<ol>
+<li><code>pre-clean</code>执行一些清理前需要完成的工作.</li>
+<li><code>clean</code>清理上一次构建生成的文件.</li>
+<li><code>post-clean</code>执行一些清理后需要完成的工作.<br>#####default生命周期<h5 id="site生命周期"><a href="#site生命周期" class="headerlink" title="site生命周期"></a>site生命周期</h5>####插件<br>#####命令行插件配置:<br>很多插件的目标参数都支持从命令行配置,用户可以在maven命令中使用-D参数,并伴随一个参数键=参数值的形式,来配置插件目标的参数.<br>例如,<code>maven-surefire-plugin</code>提供了一个<code>maven.test.skip</code>参数,当其值为<code>true</code>的时候,就会跳过执行测试.<br><code>$ mvn install -Dmaven.test.skip=true</code><br>参数D是java自带的,其功能是通过命令行设置一个java系统属性,maven简单的重用了该参数,在准备插件的时候检查系统属性,便实现了插件参数的配置.</li>
+</ol>
+<p>插件自定义绑定到pom.xml示例:(自定义将某个插件目标绑定到生命周期的某个阶段上)<br><code>http://maven.apache.org/components/plugins/maven-source-plugin/usage.html</code><br><strong>tips:</strong></p>
+<ol>
+<li>插件列表:<code>http://maven.apache.org/components/plugins/</code></li>
+<li>可以使用<code>maven-help-plugin</code>查看插件详细信息,了解插件目标的默认绑定阶段.<br><code>$ mvn help:describe-Dplugin=org.apache.maven.plugins:maven-source-plugin:2.1.1-Ddetail</code></li>
+<li>maven生命周期介绍:<code>http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html</code><br>#####pom中插件全局配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;plugin&gt;</div><div class="line">		        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">		        &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</div><div class="line">		        &lt;version&gt;3.1&lt;/version&gt;</div><div class="line">		        &lt;configuration&gt;</div><div class="line">		          &lt;source&gt;1.8&lt;/source&gt;</div><div class="line">		          &lt;target&gt;1.8&lt;/target&gt;</div><div class="line">		        &lt;/configuration&gt;</div><div class="line">	       &lt;/plugin&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><code>mvn -h</code>显示命令行帮助:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">C:\Users\mingjing&gt;mvn -h</div><div class="line"></div><div class="line">usage: mvn [options] [&lt;goal(s)&gt;] [&lt;phase(s)&gt;]</div><div class="line"></div><div class="line">Options:</div><div class="line"> -am,--also-make                        If project list is specified, also</div><div class="line">                                        build projects required by the</div><div class="line">                                        list</div><div class="line"> -amd,--also-make-dependents            If project list is specified, also</div><div class="line">                                        build projects that depend on</div><div class="line">                                        projects on the list</div><div class="line"> -B,--batch-mode                        Run in non-interactive (batch)</div><div class="line">                                        mode</div><div class="line"> -b,--builder &lt;arg&gt;                     The id of the build strategy to</div><div class="line">                                        use.</div><div class="line"> -C,--strict-checksums                  Fail the build if checksums don&apos;t</div><div class="line">                                        match</div><div class="line"> -c,--lax-checksums                     Warn if checksums don&apos;t match</div><div class="line"> -cpu,--check-plugin-updates            Ineffective, only kept for</div><div class="line">                                        backward compatibility</div><div class="line"> -D,--define &lt;arg&gt;                      Define a system property</div><div class="line"> -e,--errors                            Produce execution error messages</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">##### 插件解析机制</div><div class="line">插件和依赖都基于坐标存储在Maven仓库中,在需要的时候,maven会从本地仓库寻找插件,如果不存在则从远程仓库查找,找到插件之后再下载到本地仓库使用.</div><div class="line">但是maven会区别对待依赖的远程仓库和插件的远程仓库,通过settings.xml配置的远程仓库只对一般的依赖有效.</div><div class="line">即maven需要的插件在本地仓库不存在时.不会去配置的远程仓库查找.</div><div class="line"></div><div class="line">插件的远程仓库使用`pluginRepositories`和`pluginRepository`配置,例如,maven内置了如下的插件远程仓库配置:</div></pre></td></tr></table></figure>
+<p><pluginrepositories></pluginrepositories></p>
+<p><pluginrepository><br>      <id>central</id><br>      <name>maven plugin Repository</name><br>      <url><a href="http://repo1.maven.org/maven2" target="_blank" rel="external">http://repo1.maven.org/maven2</a></url><br>      <layout>default</layout><br>      <snapshots><br>        <enabled>false</enabled><br>      </snapshots><br>      <releases><br>          <updatepolicy>never</updatepolicy><br>      </releases><br>    </pluginrepository><br>    <br>```</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/maven/" rel="tag">#maven</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/29/alibaba的druid数据库连接池/" rel="next" title="alibaba的druid数据库连接池">
+                <i class="fa fa-chevron-left"></i> alibaba的druid数据库连接池
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/29/Spring-装配Bean/" rel="prev" title="Spring-装配Bean">
+                Spring-装配Bean <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/10/29/Maven实战笔记/"
+           data-title="Maven实战笔记" data-url="http://yoursite.com/2017/10/29/Maven实战笔记/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="jing Ming" />
+          <p class="site-author-name" itemprop="name">jing Ming</p>
+          <p class="site-description motion-element" itemprop="description">只有用心灵才能看得清事物本质，真正重要的东西是肉眼无法看见的!</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#maven使用入门"><span class="nav-number">1.</span> <span class="nav-text">maven使用入门</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编写POM"><span class="nav-number">1.1.</span> <span class="nav-text">编写POM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写测试代码"><span class="nav-number">1.2.</span> <span class="nav-text">编写测试代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#依赖范围"><span class="nav-number">1.3.</span> <span class="nav-text">依赖范围</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优化依赖"><span class="nav-number">1.4.</span> <span class="nav-text">优化依赖</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#maven仓库"><span class="nav-number">2.</span> <span class="nav-text">maven仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#中央仓库"><span class="nav-number">2.1.</span> <span class="nav-text">中央仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#私服"><span class="nav-number">2.2.</span> <span class="nav-text">私服</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#远程仓库的配置"><span class="nav-number">2.3.</span> <span class="nav-text">远程仓库的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#部署至远程仓库"><span class="nav-number">2.4.</span> <span class="nav-text">部署至远程仓库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期和插件"><span class="nav-number">3.</span> <span class="nav-text">生命周期和插件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#生命周期"><span class="nav-number">3.1.</span> <span class="nav-text">生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#site生命周期"><span class="nav-number">3.1.1.</span> <span class="nav-text">site生命周期</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jing Ming</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jingduoshuo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("zFSdtseDLPAACGnA5S1smCjc-gzGzoHsz", "nrBEdQBNssakuop3Hpl6DXQN");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
